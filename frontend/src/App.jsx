@@ -12,7 +12,7 @@ function App() {
   }
   useEffect(() => {
     tododata();
-  }, []);
+  }, [todos]);
 
   return (
     <>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Todos = ({ todos }) => {
+const Todos = ({ todos,render }) => {
   return (
     <>
       {todos.map((todo) => {
