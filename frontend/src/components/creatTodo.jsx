@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 const CreatTodo = () => {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
+  const [redirect, setRedirect] = useState(false);
   const createTodo = async () => {
     const data = await fetch("http://localhost:3000/todo", {
       method: "post",
@@ -14,11 +16,14 @@ const CreatTodo = () => {
         "content-type": "application/json",
       },
     }).then(() => {
+      setRedirect(true);
       alert("Todo created");
     });
   };
 
-  return (
+  return redirect ? (
+    <Navigate to="/" />
+  ) : (
     <div>
       <input
         onChange={(e) => {

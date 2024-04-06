@@ -39,19 +39,38 @@ app.get("/todos", async (req, res) => {
 });
 app.put("/completed", async (req, res) => {
   const todoData = req.body;
-  const parsedData = createTodo.safeParse(todoData);
+  const parsedData = updateTodo.safeParse(todoData);
   if (!parsedData.success === true) {
     res.status(403).json("your input is incorrect send valid data ");
   }
-  await Todo.update(
+  const complete = await Todo.findOne({
+    _id: req.body.id,
+  });
+  await Todo.findOneAndUpdate(
     {
       _id: req.body.id,
     },
     {
-      completed: true,
+      completed: !complete.completed,
     }
   );
   res.json("Todo marked as done ");
 });
 
+app.put("/incomplete", async (req, res) => {
+  const todoData = req.body;
+  const parsedData = updateTodo.safeParse(todoData);
+  if (!parsedData.success === true) {
+    res.status(403).json("your input is incorrect send valid data ");
+  }
+  await Todo.findOneAndUpdate(
+    {
+      _id: req.body.id,
+    },
+    {
+      completed: false,
+    }
+  );
+  res.json("Todo marked as done ");
+});
 app.listen(3000);
